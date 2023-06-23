@@ -15,7 +15,6 @@ const shop = () => {
         {PRODUCTS.map((pro) => {
           return (
             <ShopItem
-              key={pro.id}
               id={pro.id}
               img={pro.productImage}
               name={pro.productName}

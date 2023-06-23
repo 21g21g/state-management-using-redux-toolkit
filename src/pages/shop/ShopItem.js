@@ -1,29 +1,33 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import "./ShopItem.css";
-import { Themecont } from "../../context/ThemeContext";
+import { shopsliceAction } from "../../store/statemana";
+import { useDispatch, useSelector } from "react-redux";
 
 const ShopItem = ({ img, name, price, id }) => {
-  const { addToCart, count, cartItems } = useContext(Themecont);
-  const handleAddToCart = () => {
-    addToCart(id);
+  const dispatch = useDispatch();
+  const meku = useSelector((state) => state.shop.meku);
+
+  const addToCart = () => {
+    dispatch(
+      shopsliceAction.addToCart({
+        id,
+        name,
+        price,
+        img,
+      })
+    );
   };
 
   return (
-    <div className="product">
+    <div className="product" key={id}>
       <img src={img} alt="there is no image" />
       <p>
         <b>{name}</b>
       </p>
       <p>${price}</p>
 
-      <button
-        key={id}
-        className="addToCartBttn"
-        onClick={handleAddToCart}
-        disabled={cartItems.some((item) => item.id === id)}
-      >
-        {cartItems.some((item) => item.id === id) ? "Added" : "Add To Cart"}
-        {cartItems.some((item) => item.id === id) && ` (${count})`}
+      <button className="addToCartBttn" onClick={addToCart}>
+        add cart{meku}
       </button>
     </div>
   );
